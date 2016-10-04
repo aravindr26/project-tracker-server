@@ -4,19 +4,30 @@
 
 var sequelize = require('../../config/sequelizeConfig');
 var db = require('../models').projectMembers;
-exports.addProjectMember = function(req,res) {
+var _ = require('lodash');
+exports.addProjectMember = function(req, res, user_id) {
     var projectMemberDetails = {
         project_member_role: req.body.projectMemberRole,
-        project_member_added_by: req.body.memberAddedBy,
-        project_id: req.body.project_id
+        project_id: req.body.project_id,
+        userId: user_id
     };
 
-    sequelize.sync({ force: false }).then(function () {
-        db.create(projectMemberDetails).then(function () {
-            res.send({"status": true, "message": "Project Members added successfully"});
+    return sequelize.sync({ force: false }).then(function () {
+        return db.create(projectMemberDetails).then(function () {
+          return true;
         }, function (error) {
-            console.log(error);
-            res.send({"status": false, "message": "Failed to add the member"});
+          return false; 
         });
     });
+}
+
+exports.getProjectMemberDetails = function(projectID) {
+    var projectMemberList = [];
+    return db.findAll({where: {project_id: projectID}})
+      .then(function(projectMemberData) {
+        _(projectMemberData).forEach(function (value, key) {
+          projectMemberList.push(projectMemberData[key].dataValues.userId);
+        })
+        return projectMemberList;
+      })
 }

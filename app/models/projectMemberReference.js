@@ -1,17 +1,13 @@
-/**
- * Created by aravind on 10/8/16.
- */
-
 var Sequelize = require('sequelize');
 module.exports = function (sequelize) {
-    var projectMembers = sequelize.define("project_member_details", {
-        project_member_id: {
+    var projectMembersReference = sequelize.define("project_member_reference", {
+        project_member_refernce_id: {
             type: Sequelize.INTEGER,
             primaryKey: true,
             autoIncrement: true
         },
         project_member_role: Sequelize.STRING,
-        project_member_status: Sequelize.STRING
+        project_member_email: Sequelize.STRING
     });
-    return projectMembers;
+    return projectMembersReference;
 };

@@ -7,10 +7,7 @@ module.exports = function (sequelize) {
         autoIncrement: true
       },
       project_name: Sequelize.STRING,
-      project_description: Sequelize.STRING,
-      project_start_date: Sequelize.DATE,
-      project_sprint_duration: Sequelize.INTEGER,
-      project_end_date: Sequelize.DATE
+      project_description: Sequelize.STRING
     });
     return Projects;
 };

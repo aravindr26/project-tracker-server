@@ -5,6 +5,7 @@ var config = require('./config');
 module.exports = function(passport) {
   var opts = {};
   opts.secretOrKey = config.secret;
+  console.log('passport config loaded');
   passport.use(new JwtStrategy(opts, function(jwt_payload, done) {
     User.findOne({id: jwt_payload.id}, function(err, user) {
           if (err) {

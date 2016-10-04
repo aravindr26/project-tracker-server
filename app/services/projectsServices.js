@@ -1,23 +1,33 @@
+
 var sequelize = require('../../config/sequelizeConfig');
+var _ = require('lodash');
 var db = require('../models').projects;
-console.log(db);
 exports.createProject = function(req,res) {
 
     var projectDetails = {
       project_name: req.body.projectName,
-      project_description: req.body.projectDescription,
-      project_start_date: req.body.projectStartDate,
-      project_end_date: req.body.projectEndDate,
-      project_sprint_duration: req.body.projectSprintDuration
+      project_description: req.body.projectDescription
     };
 
-    sequelize.sync({ force: false }).then(function () {
-      db.create(projectDetails).then(function () {
-        res.send({"status": true, "message": "Project successfully created."});
+    return sequelize.sync({ force: false }).then(function () {
+      return db.create(projectDetails).then(function (data) {
+        //res.send({"status": true, "message": "Project successfully created."});
+        return data;
       }, function (error) {
-        res.send({"status": false, "message": "Project creation failed"});
+        return false;
+        //res.send({"status": false, "message": "Project creation failed"});
       });
     });
+}
+
+exports.getAllProjects =  function (req, res) {
+  var projectList = [];
+  return db.findAll().then(function(project) {
+    _(project).forEach(function (value, key) {
+      projectList.push(project[key].dataValues);
+    })
+    return projectList;
+  });
 }
 
 exports.deleteProject = function(req, res) {

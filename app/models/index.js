@@ -12,9 +12,16 @@ var Sequelize = require('sequelize');
         sequelize: sequelize,
         User: sequelize.import(__dirname + '/user'),
         projects: sequelize.import(__dirname + '/projects'),
-        projectMembers: sequelize.import(__dirname + '/projectMembers')
+        projectMembers: sequelize.import(__dirname + '/projectMembers'),
+        projectMembersReference: sequelize.import(__dirname + '/projectMemberReference')
     };
+    
+    /*ProjectMember*/
+   global.db.projectMembers.belongsTo(global.db.projects, {foreignKey: 'project_id', targetKey:'project_id'});
+   global.db.projectMembers.belongsTo(global.db.User, {foreignKey: 'userId', targetKey: 'userId'});
 
-    global.db.projectMembers.belongsTo(global.db.projects, {foreignKey: 'project_id', targetKey:'project_id'});
+    /* Project member reference - temporary table
+     (storing member details till member verifies through email)*/
 
+   global.db.projectMembersReference.belongsTo(global.db.projects, {foreignKey: 'project_id', targetKey: 'project_id'}); 
 module.exports = global.db;

@@ -3,7 +3,11 @@ var Sequelize    = require('sequelize');
 var sequelize = new Sequelize('project_tracker', 'root', 'root', {
     host: "localhost",
     port: 3306,
-    dialect: 'mysql'
+    dialect: 'mysql',
+    pool: false,
+    define: {
+    timestamps: false // true by default
+    }
 });
 
 sequelize.authenticate().then(function (error) {

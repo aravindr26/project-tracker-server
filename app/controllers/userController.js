@@ -5,5 +5,5 @@ exports.userSignUp = function(req, res) {
 }
 
 exports.userLogin = function(req, res) {
-  userService.userAuthentication(req, res);
+  userService.userSignIn(req, res);
 }

@@ -1,18 +1,42 @@
 var projectService = require('../services/projectsServices');
+var projectMemberService = require('../services/projectMemberServices');
 
 exports.createProject = function (req, res) {
   if (req.body.projectName && req.body.projectDescription) {
-  	projectService.createProject(req, res);
+  	projectService.createProject(req, res)
+      .then(function (data) {
+        req.body.project_id = data.dataValues.project_id;
+        req.body.projectMemberRole = 'Admin';
+        projectMemberService.addProjectMember(req, res)
+          .then(function (memberData){
+             res.send({"status": true, "message": "Project Added successfully"});
+          }, function(error) {
+             res.send({"status": false, "message": "Failed to add the project"});
+          });
+      }, function (error) {
+
+      });
   } else {
   	res.send({"status": false, "message": "Mandatory fields are missing"});
   }
 }
 
-exports.getProjectList = function (req, res) {
-  res.send({"message":"under development"});
+exports.getAllProjects = function (req, res) {
+  projectService.getAllProjects(req, res).then (function (projectList) {
+    if (projectList && projectList.length) {
+      res.send({
+        "projects": projectList,
+        "status": true
+      })
+    } else {
+      res.send({
+        "status": false
+      })
+    }
+  })
 }
 
-exports.getProjectDetails = function (req, res) {
+exports.getProjectDetailsById = function (req, res) {
   res.send({"message":"under development"});
 }
 
