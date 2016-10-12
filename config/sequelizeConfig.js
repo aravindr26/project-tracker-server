@@ -4,10 +4,7 @@ var sequelize = new Sequelize('project_tracker', 'root', 'root', {
     host: "localhost",
     port: 3306,
     dialect: 'mysql',
-    pool: false,
-    define: {
-    timestamps: false // true by default
-    }
+    pool: false
 });
 
 sequelize.authenticate().then(function (error) {

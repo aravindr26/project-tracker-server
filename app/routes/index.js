@@ -3,6 +3,7 @@ var config = require('../../config/config');
 var userAuthentication = require('./user.authentication.route');
 var projectDetails = require('./project.details.route');
 var projectMemberManagement = require('./project.member.management.route');
+var storyDetails = require('./story.details.route');
 var tokenCheck = require('../../config/tokenValidation');
 module.exports = function(app) {
 
@@ -23,5 +24,6 @@ module.exports = function(app) {
     }
   });
   app.use('/project', projectDetails);
-  app.use('/projectMember', projectMemberManagement)
+  app.use('/projectMember', projectMemberManagement);
+  app.use('/story', storyDetails);
 }

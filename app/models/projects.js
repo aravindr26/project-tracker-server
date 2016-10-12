@@ -8,6 +8,10 @@ module.exports = function (sequelize) {
       },
       project_name: Sequelize.STRING,
       project_description: Sequelize.STRING
+    }, {
+      timestamps: false,
+      createdAt: false,
+      updatedAt: false
     });
     return Projects;
 };

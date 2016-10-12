@@ -8,6 +8,10 @@ module.exports = function (sequelize) {
         },
         project_member_role: Sequelize.STRING,
         project_member_email: Sequelize.STRING
+    }, {
+      timestamps: false,
+      createdAt: false,
+      updatedAt: false
     });
     return projectMembersReference;
 };

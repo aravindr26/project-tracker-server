@@ -13,6 +13,7 @@ module.exports = function (sequelize) {
       email: Sequelize.STRING,
       password: Sequelize.STRING
     }, {
+      timestamps: false,
       instanceMethods: {
         isValidPassword: function(password, user) {
           return bcrypt.compareSync(password, user.password);

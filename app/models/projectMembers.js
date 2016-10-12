@@ -12,6 +12,10 @@ module.exports = function (sequelize) {
         },
         project_member_role: Sequelize.STRING,
         project_member_status: Sequelize.STRING
+    }, {
+      timestamps: false,
+      createdAt: false,
+      updatedAt: false
     });
     return projectMembers;
 };
