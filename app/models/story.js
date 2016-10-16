@@ -10,8 +10,9 @@ module.exports = function (sequelize) {
       story_type: Sequelize.STRING,
       story_priority: Sequelize.STRING,
       story_point: Sequelize.STRING,
-      story_assignee: Sequelize.STRING,
       story_description: Sequelize.STRING,
+      story_status: Sequelize.STRING,
+      story_is_blocked: Sequelize.BOOLEAN
     }, {
       timestamps: true,
     });

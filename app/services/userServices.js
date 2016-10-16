@@ -34,13 +34,15 @@ exports.userSignIn = function(req, res) {
     if (!user) {
       res.send({"status": false, "message": 'Authentication failed. User not found.'});
     } else {
+
       var isPasswordMatch = user.isValidPassword(req.body.password, user);
 
       if(isPasswordMatch) {
         // if user is found and password is right create a token
         var token = jwt.encode(user, config.secret);
+        var fullName = user.dataValues.firstName +' '+ user.dataValues.lastName;
         // return the information including token as JSON
-        res.json({status: true, token: token});
+        res.json({status: true, token: token, userId: user.dataValues.userId, userName: fullName});
       } else {
         res.send({status: false, "message": 'Authentication failed. Wrong password.'});
       }

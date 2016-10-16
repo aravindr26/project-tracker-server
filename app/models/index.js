@@ -14,7 +14,10 @@ var Sequelize = require('sequelize');
         projects: sequelize.import(__dirname + '/projects'),
         projectMembers: sequelize.import(__dirname + '/projectMembers'),
         projectMembersReference: sequelize.import(__dirname + '/projectMemberReference'),
-        story: sequelize.import(__dirname + '/story')
+        story: sequelize.import(__dirname + '/story'),
+        storyComment: sequelize.import(__dirname + '/storyComments'),
+        storyLabel: sequelize.import(__dirname + '/storyLabels'),
+        projectSettings: sequelize.import(__dirname + '/projectSettings')
     };
     
     /*ProjectMember*/
@@ -27,4 +30,17 @@ var Sequelize = require('sequelize');
    global.db.projectMembersReference.belongsTo(global.db.projects, {foreignKey: 'project_id', targetKey: 'project_id'}); 
    /*story details*/
    global.db.story.belongsTo(global.db.projects, {foreignKey: 'project_id', targetKey: 'project_id'});
+   global.db.story.belongsTo(global.db.User, {foreignKey: 'userId', targetKey: 'userId'});
+
+   /* Story Comments*/
+   global.db.storyComment.belongsTo(global.db.story, {foreignKey: 'story_id', targetKey: 'story_id'});
+   global.db.storyComment.belongsTo(global.db.User, {foreignKey: 'userId', targetKey: 'userId'});
+  
+  /* Story labels */
+   global.db.storyLabel.belongsTo(global.db.story, {foreignKey: 'story_id', targetKey:'story_id'});
+
+   /* project settings*/
+
+  global.db.projectSettings.belongsTo(global.db.projects, {foreignKey: 'project_id', targetKey: 'project_id'});
+
 module.exports = global.db;

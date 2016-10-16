@@ -20,9 +20,9 @@ exports.createProject = function(req,res) {
     });
 }
 
-exports.getAllProjects =  function (req, res) {
+exports.getTopProjects =  function (req, res) {
   var projectList = [];
-  return db.findAll().then(function(project) {
+  return db.findAll({limit: 3}).then(function(project) {
     _(project).forEach(function (value, key) {
       projectList.push(project[key].dataValues);
     })
@@ -44,4 +44,33 @@ exports.deleteProject = function(req, res) {
       }
     });
   });
+}
+
+exports.getProjectDetailsById = function(req, res) {
+  db.findOne({where: {project_id: req.param('project_id')}})
+  .then(function (projectData) {
+    if(!projectData) {
+      res.send({"status": false, "message": "No project Found"})
+    } else {
+      res.send({"status": true, "ProjectData": projectData.dataValues})
+    }
+  })
+}
+
+exports.updateProjectInfo =function(req, res) {
+  db.update({
+    project_name: req.body.projectName,
+    project_description: req.body.projectDescription
+  },
+  {
+    where : {
+      project_id: req.body.project_id
+    }
+  }).then(function (projectData) {
+    if(!projectData) {
+      res.send({"status": false, "message" : "Failed to update project"});
+    } else {
+      res.send({"status":true, "message": "Project data updated successfully"});
+    }
+  })
 }

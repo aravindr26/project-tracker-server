@@ -21,8 +21,8 @@ exports.createProject = function (req, res) {
   }
 }
 
-exports.getAllProjects = function (req, res) {
-  projectService.getAllProjects(req, res).then (function (projectList) {
+exports.getTopProjects = function (req, res) {
+  projectService.getTopProjects(req, res).then (function (projectList) {
     if (projectList && projectList.length) {
       res.send({
         "projects": projectList,
@@ -37,7 +37,7 @@ exports.getAllProjects = function (req, res) {
 }
 
 exports.getProjectDetailsById = function (req, res) {
-  res.send({"message":"under development"});
+  projectService.getProjectDetailsById(req, res);
 }
 
 exports.deleteProject = function (req,res) {
@@ -49,5 +49,5 @@ exports.deleteProject = function (req,res) {
 }
 
 exports.updateProject = function (req, res) {
-  res.send({"message":"under development"});
+  projectService.updateProjectInfo(req, res);
 }

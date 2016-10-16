@@ -1,10 +1,14 @@
 var router = require('express').Router();
 var projectsController =  require('../controllers/projectsController');
+var projectSettingsController = require('../controllers/projectSettingsController');
 
 router.post('/createProject',projectsController.createProject);
-router.get('/getAllProjects',projectsController.getAllProjects);
-router.get('/projectDetailsById',projectsController.getProjectDetailsById);
+router.get('/fetchTopProjects',projectsController.getTopProjects);
+router.get('/fetchProjectDetailsById',projectsController.getProjectDetailsById);
 router.delete('/deleteProject',projectsController.deleteProject);
-router.get('/updateProject',projectsController.updateProject);
+router.post('/updateProjectDetails',projectsController.updateProject);
+
+router.post('/saveProjectSettings',projectSettingsController.saveProjectsSettings);
+router.get('/fetchProjectSettings',projectSettingsController.fetchProjectSettingsById);
 
 module.exports = router;

@@ -1,18 +1,19 @@
 var Sequelize = require('sequelize');
 module.exports = function (sequelize) {
-    var Projects = sequelize.define("project_settings", {
+    var ProjectSettings = sequelize.define("project_settings", {
       project_settings_id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true
       },
-      project_start_date: Sequelize.DATE,
+      project_start_date: Sequelize.STRING,
       project_sprint_duration: Sequelize.INTEGER,
-      project_end_date: Sequelize.DATE
+      project_sprint_starts_on: Sequelize.INTEGER,
+      project_end_date: Sequelize.STRING
     }, {
-      timestamps: false,
-      createdAt: false,
-      updatedAt: false
+      timestamps: true,
+      createdAt: true,
+      updatedAt: true
     });
     return ProjectSettings;
 };
