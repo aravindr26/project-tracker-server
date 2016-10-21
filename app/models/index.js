@@ -5,7 +5,7 @@
 /*global global:false, require:false, process:false, __dirname:false, module:false*/
 var sequelize = require('../../config/sequelizeConfig');
 var Sequelize = require('sequelize');
-
+  
 
     global.db = {
         Sequelize: Sequelize,
@@ -17,7 +17,9 @@ var Sequelize = require('sequelize');
         story: sequelize.import(__dirname + '/story'),
         storyComment: sequelize.import(__dirname + '/storyComments'),
         storyLabel: sequelize.import(__dirname + '/storyLabels'),
-        projectSettings: sequelize.import(__dirname + '/projectSettings')
+        projectSettings: sequelize.import(__dirname + '/projectSettings'),
+        storyStatus: sequelize.import(__dirname + '/storyStatus'),
+        storyType: sequelize.import(__dirname + '/storyTypes')
     };
     
     /*ProjectMember*/

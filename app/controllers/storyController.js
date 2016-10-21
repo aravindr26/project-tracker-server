@@ -49,3 +49,11 @@ exports.fetchTopStories = function(req, res) {
     }
   })
 }
+
+exports.saveStoryStatus = function(req, res) {
+  storyService.addStoryStatus(req, res);
+}
+
+exports.saveStoryType =function(req, res) {
+  storyService.addStoryType(req, res);
+}

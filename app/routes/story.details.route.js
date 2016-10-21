@@ -16,4 +16,7 @@ router.get('/fetchCommentByStory', storyCommentController.fetchCommentsByStory);
 router.post('/addStoryLabel', storyLabelController.addStoryLabel);
 router.get('/fetchLabelByStory', storyLabelController.getlabelsByStory);
 
+router.post('/saveStoryType', storyController.saveStoryType);
+router.post('/saveStoryStatus', storyController.saveStoryStatus);
+
 module.exports = router;

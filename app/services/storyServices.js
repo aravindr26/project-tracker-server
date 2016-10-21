@@ -3,6 +3,7 @@ var _ = require('lodash');
 var db = require('../models').story;
 var user = require('../models').User;
 var storyStatusDB = require('../models').storyStatus;
+var storyTypeDB = require('../models').storyType;
 
 exports.createStory = function(req, res) {
   var storyDetails = {
@@ -115,4 +116,32 @@ exports.fetchTopStories = function(req, res) {
       })
       return storyData;
     })
+}
+
+exports.addStoryType = function(req, res) {
+  var storyType = {
+    story_type_label: req.body.storyType
+  };
+
+   sequelize.sync({ force: false }).then(function () {
+      storyTypeDB.create(storyType).then(function (data) {
+         res.send({"status":true, "message": "Story type added successfully"});
+      }, function (error) {
+         res.send({"status":false, "message": "Failed to add story type"});
+      });
+    });
+}
+
+exports.addStoryStatus = function(req, res) {
+  var storyStatus = {
+    story_status_label: req.body.storyStatus
+  };
+
+   sequelize.sync({ force: false }).then(function () {
+      storyStatusDB.create(storyStatus).then(function (data) {
+          res.send({"status":true, "message": "Story status added successfully"});
+      }, function (error) {
+         res.send({"status":false, "message": "Failed to add story status"});
+      });
+    });
 }
