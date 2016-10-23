@@ -9,5 +9,6 @@ router.post('/addMember',projectsMemberController.addMember);
 router.get('/updateMember',projectsMemberController.updateMember);
 router.get('/getMemberDetails',projectsMemberController.getMemberDetails);
 router.delete('/deleteMember',projectsMemberController.deleteMember);
+router.post('/exportMemberData',projectsMemberController.exportMemberData)
 
 module.exports = router;
