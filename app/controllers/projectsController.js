@@ -22,7 +22,9 @@ exports.createProject = function (req, res) {
 }
 
 exports.getTopProjects = function (req, res) {
-  projectService.getTopProjects(req, res).then (function (projectList) {
+  projectMemberService.getProjectDetailsByMemberId(req.param('user_id')).
+  then(function(projectData) {
+    projectService.getTopProjects(projectData).then (function (projectList) {
     if (projectList && projectList.length) {
       res.send({
         "projects": projectList,
@@ -33,6 +35,7 @@ exports.getTopProjects = function (req, res) {
         "status": false
       })
     }
+  })
   })
 }
 

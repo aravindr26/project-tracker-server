@@ -2,6 +2,8 @@
 var sequelize = require('../../config/sequelizeConfig');
 var _ = require('lodash');
 var db = require('../models').projects;
+var story_type = require('../models').story;
+var project_member = require('../models').projectMembers;
 exports.createProject = function(req,res) {
 
     var projectDetails = {
@@ -20,9 +22,24 @@ exports.createProject = function(req,res) {
     });
 }
 
-exports.getTopProjects =  function (req, res) {
+exports.getTopProjects =  function (projectData) {
   var projectList = [];
-  return db.findAll({limit: 3}).then(function(project) {
+  return db.findAll({
+    where: { 
+      project_id: {
+        $in: projectData
+      }
+    },
+    include: [{
+      model: story_type,
+      attributes: ['story_type']
+    },
+    {
+      model: project_member,
+      attributes: ['project_member_id']
+    }]
+  }).then(function(project) {
+      console.log('project====', project);
     _(project).forEach(function (value, key) {
       projectList.push(project[key].dataValues);
     })

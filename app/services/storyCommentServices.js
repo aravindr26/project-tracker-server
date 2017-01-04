@@ -39,3 +39,13 @@ exports.fetchCommentByStory = function(req, res) {
 
     })
 }
+
+exports.deleteCommentDataById = function(req, res) {
+  return db.destroy({
+    where: {
+      story_comment_id: req.param('comment_id')
+    }
+  }).then(function(data) {
+    return data;
+  })
+}

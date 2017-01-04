@@ -145,3 +145,24 @@ exports.addStoryStatus = function(req, res) {
       });
     });
 }
+
+exports.fetchStoryById = function(req,res) {
+  return db.findOne({
+    where: {
+      story_id: req.body.story_id
+    },
+    attributes: ['story_summery','story_type', 'story_priority', 'story_point', 'story_description', 'story_status', 'story_is_blocked']
+  }).then(function(storyData){
+    return storyData;
+  })
+}
+
+exports.deleteStoryInfoById = function(req, res) {
+  return db.destroy({
+    where: {
+      story_id: req.param('story_id')
+    }
+  }).then(function(data) {
+    return data;
+  })
+}

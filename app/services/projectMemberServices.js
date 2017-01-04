@@ -31,3 +31,14 @@ exports.getProjectMemberDetails = function(projectID) {
         return projectMemberList;
       })
 }
+
+exports.getProjectDetailsByMemberId = function(userId) {
+  var projectList= [];
+  return db.findAll({where: {userId: userId}})
+  .then(function(pojectData) {
+    _(pojectData).forEach(function (value, key) {
+      projectList.push(pojectData[key].dataValues.project_id);
+    })
+    return projectList;
+  })
+}

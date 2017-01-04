@@ -1,4 +1,5 @@
 var storyService = require('../services/storyServices');
+var json2csv = require('json2csv');
 
 exports.addStoryData = function(req, res) {
   storyService.createStory(req, res);
@@ -56,4 +57,33 @@ exports.saveStoryStatus = function(req, res) {
 
 exports.saveStoryType =function(req, res) {
   storyService.addStoryType(req, res);
+}
+
+exports.exportStoryData =  function(req, res) {
+  var data= [];
+  storyService.fetchStoryById(req, res)
+  .then(function(storyInfo) {
+    var fields = ['story_summery','story_type', 'story_priority', 'story_point', 'story_description', 'story_status', 'story_is_blocked'];
+    var csv = json2csv({ data: storyInfo, fields: fields });
+    res.setHeader('Content-disposition', 'attachment; filename=storyDetails.csv');
+    res.set('Content-Type', 'text/csv');
+    res.status(200).send(csv);
+  })
+}
+
+exports.deleteStoryById = function(req, res) {
+  storyService.deleteStoryInfoById(req, res)
+  .then(function(data) {
+    if(data === 1){
+      res.send({
+        deleted: true,
+        message: 'Story deleted successfully'
+      });
+    } else{
+      res.send({
+        deleted: false,
+        message: 'Failed to delete the story'
+      });
+    }
+  })
 }

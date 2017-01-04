@@ -15,7 +15,6 @@ exports.userRegistration = function(req,res) {
       password: hashPassword
     };
 
-
     sequelize.sync({ force: false }).then(function () {
       db.create(newUser).then(function (user) {
         res.send({"status": "success", "message": "Successfully registered"});
@@ -30,11 +29,9 @@ exports.userRegistration = function(req,res) {
 
 exports.userSignIn = function(req, res) {
   db.findOne({where: {email: req.body.email}}).then(function(user) {
-
     if (!user) {
       res.send({"status": false, "message": 'Authentication failed. User not found.'});
     } else {
-
       var isPasswordMatch = user.isValidPassword(req.body.password, user);
 
       if(isPasswordMatch) {
@@ -44,7 +41,7 @@ exports.userSignIn = function(req, res) {
         // return the information including token as JSON
         res.json({status: true, token: token, userId: user.dataValues.userId, userName: fullName});
       } else {
-        res.send({status: false, "message": 'Authentication failed. Wrong password.'});
+        res.send({status: false, "message": 'User not Found'});
       }
     }
   });
@@ -73,5 +70,30 @@ exports.getUserListById = function (userList) {
     if (memberData) {
       return memberData;
     }
+  })
+}
+
+exports.fetchUserData = function(req, res) {
+  return db.findOne({
+    where: {
+      userId: req.param('user_id')
+    }
+  }).then(function(data) {
+    return data;
+  })
+}
+
+exports.updateUserData = function(req, res) {
+  return db.update({
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    phoneNumber: req.body.phoneNumber,
+    email: req.body.email
+  },{
+    where: {
+      userId: req.body.userId
+    }
+  }).then(function(data) {
+    return data;
   })
 }

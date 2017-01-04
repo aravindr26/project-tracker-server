@@ -32,3 +32,13 @@ exports.getLabelList = function (req, res) {
 
     })
 }
+
+exports.deleteLabelById = function(req, res) {
+  return db.destroy({
+    where: {
+      story_label_id: req.param('label_id')
+    }
+  }).then(function(data) {
+    return data;
+  })
+}

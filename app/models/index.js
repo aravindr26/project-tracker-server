@@ -21,6 +21,9 @@ var Sequelize = require('sequelize');
         storyStatus: sequelize.import(__dirname + '/storyStatus'),
         storyType: sequelize.import(__dirname + '/storyTypes')
     };
+
+    global.db.projects.hasMany(global.db.story, {foreignKey: 'project_id', targetKey:'project_id'});
+    global.db.projects.hasMany(global.db.projectMembers, {foreignKey: 'project_id', targetKey:'project_id'});
     
     /*ProjectMember*/
    global.db.projectMembers.belongsTo(global.db.projects, {foreignKey: 'project_id', targetKey:'project_id'});

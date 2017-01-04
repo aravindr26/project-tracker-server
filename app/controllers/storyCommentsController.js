@@ -14,3 +14,20 @@ exports.fetchCommentsByStory = function(req, res) {
 		}
 	})
 }
+
+exports.deleteCommentById =function(req, res) {
+  storyCommentService.deleteCommentDataById(req, res).
+  then(function(data) {
+  	if(data === 1) {
+      res.send({
+      	status: true,
+      	message: "Mesage deleted successfully"
+      });
+  	} else {
+      res.send({
+      	status: false,
+      	message: "Failed to delete message"
+      });
+  	}
+  })
+}
