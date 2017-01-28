@@ -2,7 +2,20 @@ var storyService = require('../services/storyServices');
 var json2csv = require('json2csv');
 
 exports.addStoryData = function(req, res) {
-  storyService.createStory(req, res);
+  storyService.createStory(req, res).
+  then(function(data){
+    console.log('data in story add=---' , data);
+    if(data) {
+      res.send({
+        status: true,
+        data: data
+      });
+    } else{
+      res.send({
+        status: false
+      })
+    }
+  })
 }
 
 exports.getAllStories = function(req, res) {
@@ -83,6 +96,41 @@ exports.deleteStoryById = function(req, res) {
       res.send({
         deleted: false,
         message: 'Failed to delete the story'
+      });
+    }
+  })
+}
+
+exports.updateStoryDescription = function(req, res) {
+  storyService.updateStoryDescription(req, res)
+  .then(function(data) {
+    if(data) {
+      res.send({
+        status: true,
+        message: "Data updated successfully"
+      });
+    }
+  })
+}
+
+
+exports.getTaskCountByUser = function(req, res) {
+  var featureCount = 0;
+  var bugCount = 0;
+  storyService.getTaskCount(req, res).
+  then(function(data) {
+    if(data) {
+      for (var i=0;i<data.length;i++) {
+        if(data[i].story_type === '1') {
+          bugCount ++;
+        } else {
+          featureCount ++;
+        }
+      }
+      res.send({
+        status: true,
+        featureCount: featureCount,
+        bugCount: bugCount
       });
     }
   })

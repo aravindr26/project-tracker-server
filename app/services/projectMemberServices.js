@@ -42,3 +42,14 @@ exports.getProjectDetailsByMemberId = function(userId) {
     return projectList;
   })
 }
+
+exports.deleteMemberById = function(req, res) {
+  return db.destroy({
+    where:{
+      userId: req.param('member_id'),
+      project_id: req.param('project_id')
+    }
+  }).then(function(data){
+    return data;
+  })
+}

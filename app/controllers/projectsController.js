@@ -7,7 +7,8 @@ exports.createProject = function (req, res) {
       .then(function (data) {
         req.body.project_id = data.dataValues.project_id;
         req.body.projectMemberRole = 'Admin';
-        projectMemberService.addProjectMember(req, res)
+        var user_id = req.body.user_id;
+        projectMemberService.addProjectMember(req, res, user_id)
           .then(function (memberData){
              res.send({"status": true, "message": "Project Added successfully"});
           }, function(error) {
@@ -53,4 +54,20 @@ exports.deleteProject = function (req,res) {
 
 exports.updateProject = function (req, res) {
   projectService.updateProjectInfo(req, res);
+}
+
+exports.deleteProjectById = function(req, res) {
+  projectService.deleteProject(req, res)
+  .then(function(data) {
+    if(data) {
+      res.send({
+        status: true,
+        message: "project deleted successfully"
+      });
+    } else {
+      res.send({
+        status: false
+      });
+    }
+  })
 }

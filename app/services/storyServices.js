@@ -4,6 +4,7 @@ var db = require('../models').story;
 var user = require('../models').User;
 var storyStatusDB = require('../models').storyStatus;
 var storyTypeDB = require('../models').storyType;
+var storyLabel = require('../models').storyLabel;
 
 exports.createStory = function(req, res) {
   var storyDetails = {
@@ -12,7 +13,7 @@ exports.createStory = function(req, res) {
     story_priority: req.body.storyPriority,
     story_point: req.body.storyPoint,
     story_description: req.body.storyDescription,
-    story_status: req.body.storyStatus,
+    story_status: 1,
     story_is_blocked: req.body.storyIsBlocked,
     project_id: req.body.projectId,
     userId: req.body.storyAssignee
@@ -37,7 +38,10 @@ exports.getStoryByUser = function(projectId, userId) {
       include: [{
         model: user,
         attributes: ['email', 'firstName', 'lastName']
-      }]
+      }, {
+          model: storyLabel,
+          attributes: ['story_label']
+        }]
     })
     .then(function(storyList) {
       var listLength = storyList.length;
@@ -72,6 +76,18 @@ exports.updateStoryStatusInfo = function(req, res) {
 
 }
 
+exports.updateStoryDescription = function(req,res) {
+  return db.update({
+    story_description: req.body.story_description
+  }, {
+    where: {
+      story_id: req.body.story_id
+    }
+  }).then(function(data) {
+    return data;
+  })
+}
+
 
 exports.fetchStoryByStaus = function(projectId, storyStatus) {
   var statusList = [];
@@ -91,6 +107,9 @@ exports.fetchStoryByStaus = function(projectId, storyStatus) {
         include: [{
           model: user,
           attributes: ['email', 'firstName', 'lastName']
+        }, {
+          model: storyLabel,
+          attributes: ['story_label']
         }]
       })
       .then(function(storyList) {
@@ -107,8 +126,7 @@ exports.fetchTopStories = function(req, res) {
   return db.findAll({
       where: {
         userId: req.param('userId')
-      },
-      limit: 5
+      }
     })
     .then(function(storyList) {
       _(storyList).forEach(function(value, key) {
@@ -163,6 +181,18 @@ exports.deleteStoryInfoById = function(req, res) {
       story_id: req.param('story_id')
     }
   }).then(function(data) {
+    return data;
+  })
+}
+
+exports.getTaskCount = function(req, res) {
+  console.log('=======', req.param('user_id'));
+  return db.findAll({
+    where: {
+      userId: req.param('user_id')
+    }
+  }).then(function(data) {
+    console.log('data---->>>>>', data);
     return data;
   })
 }

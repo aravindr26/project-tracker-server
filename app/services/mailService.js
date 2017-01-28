@@ -30,3 +30,30 @@ exports.registrationMail = function (req, res) {
       
     });
 }
+
+exports.sendForgotLink = function(req, res, data) {
+  var updatedData = data.password.replace(/\//g, "#");
+  var mailLink = 'http://localhost:8080/#/forgot-link/'+ updatedData;
+  var mailOptions = {
+      from: '"ProjectTracker 👥" <projecttracker16@gmail.com>', // sender address 
+      to: req.param('email'), // list of receivers 
+      subject: 'ProjectTracker account recovery', // Subject line 
+      text: 'ProjectTracker', // plaintext body 
+      html: '<b>ProjectTracker</b></br>' +
+             'Click on below link to recover your account</br>'+
+             '<a href="'+ mailLink +'"> Click Here</a>'
+    };
+    transporter.sendMail(mailOptions, function(error, info){
+      console.log('error----', error);
+      if(error){
+        res.send({
+          message: "Failed to send Mail"
+        });
+      }else {
+        res.send({
+          message: "Mail send successfully"
+        })
+      }
+      
+    });
+}

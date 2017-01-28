@@ -10,5 +10,6 @@ router.post('/updateProjectDetails',projectsController.updateProject);
 
 router.post('/saveProjectSettings',projectSettingsController.saveProjectsSettings);
 router.get('/fetchProjectSettings',projectSettingsController.fetchProjectSettingsById);
+router.delete('/deleteProjectById', projectsController.deleteProjectById);
 
 module.exports = router;

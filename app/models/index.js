@@ -36,6 +36,8 @@ var Sequelize = require('sequelize');
    /*story details*/
    global.db.story.belongsTo(global.db.projects, {foreignKey: 'project_id', targetKey: 'project_id'});
    global.db.story.belongsTo(global.db.User, {foreignKey: 'userId', targetKey: 'userId'});
+   global.db.story.hasMany(global.db.storyLabel, {foreignKey: 'story_id', targetKey: 'story_id'});
+
 
    /* Story Comments*/
    global.db.storyComment.belongsTo(global.db.story, {foreignKey: 'story_id', targetKey: 'story_id'});

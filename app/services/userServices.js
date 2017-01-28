@@ -97,3 +97,26 @@ exports.updateUserData = function(req, res) {
     return data;
   })
 }
+ 
+exports.getUserByEmail = function(req,res) {
+  return db.findOne({
+    where: {
+      email: req.param('email')
+    }
+  }). then(function(data) {
+    return data;
+  })
+}
+
+exports.updatePassword = function(req, res) {
+  var hashPassword = db.generateHash(req.body.password);
+  return db.update({
+    password: hashPassword
+  },{
+    where: {
+      password: req.body.user_token
+    }
+  }).then(function(data){
+    return data;
+  })
+}

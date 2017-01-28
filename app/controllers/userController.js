@@ -1,4 +1,5 @@
 var userService = require('../services/userServices');
+var mailService = require('../services/mailService');
 
 exports.userSignUp = function(req, res) {
   userService.userRegistration(req,res);
@@ -32,6 +33,37 @@ exports.updateUserInfo = function(req, res) {
 				status: true,
 				message: "Details updated successfully"
 			});
+		}
+	})
+}
+
+exports.sendForgotLink =function(req, res) {
+ userService.getUserByEmail(req, res)
+  .then(function(data) {
+     if(!data) {
+     	res.send({
+     		status: false,
+     		message: "User Not Found"
+     	})
+     }else {
+     	mailService.sendForgotLink(req, res, data);
+     }
+  })
+}
+
+
+exports.updatePassword = function(req, res) {
+	userService.updatePassword(req, res)
+	.then(function(data) {
+		if(data) {
+			res.send({
+				status: true,
+				message: "Password changed successfully"
+			})
+		} else {
+			res.send({
+				status: false
+			})
 		}
 	})
 }

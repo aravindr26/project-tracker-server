@@ -27,6 +27,10 @@ router.delete('/deleteStoryById', storyController.deleteStoryById);
 router.delete('/deleteCommentById', storyCommentController.deleteCommentById);
 router.delete('/deleteLabelById', storyLabelController.removeLabelById);
 
+router.post('/updateStoryDescription', storyController.updateStoryDescription);
+
+router.get('/getTaskCount', storyController.getTaskCountByUser);
+
 
 
 module.exports = router;

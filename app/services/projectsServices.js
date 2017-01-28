@@ -39,7 +39,6 @@ exports.getTopProjects =  function (projectData) {
       attributes: ['project_member_id']
     }]
   }).then(function(project) {
-      console.log('project====', project);
     _(project).forEach(function (value, key) {
       projectList.push(project[key].dataValues);
     })
@@ -89,5 +88,15 @@ exports.updateProjectInfo =function(req, res) {
     } else {
       res.send({"status":true, "message": "Project data updated successfully"});
     }
+  })
+}
+
+exports.deleteProject = function(req, res){
+   return db.destroy({
+    where: {
+      project_id: req.param('project_id')
+    }
+  }).then(function(data) {
+    return data;
   })
 }

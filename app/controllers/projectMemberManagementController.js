@@ -12,7 +12,14 @@ exports.addMember = function(req, res) {
     userService.userAuthCheck(req.body.projectMemberEmail)
     .then(function (userInfo) {
       if(userInfo) {
-      	projectMemberService.addProjectMember(req, res, userInfo.userId);
+      	projectMemberService.addProjectMember(req, res, userInfo.userId).then(function(data){
+          if(data) {
+            res.send({
+              status: true,
+              message: "Member added successfully"
+            });
+          }
+        })
       }else{
         //var mailObj = mailService.registrationMail(req, res);
       }
@@ -44,7 +51,20 @@ exports.getMemberDetails = function(req, res) {
 }
 
 exports.deleteMember = function(req, res) {
-
+  projectMemberService.deleteMemberById(req, res).
+  then(function(data) {
+    if(data){
+      res.send({
+        status: true,
+        message: "Memeber deleted successfully"
+      });
+    } else {
+      res.send({
+        status: false,
+        message: "Failed to delete the member"
+      })
+    }
+  })
 }
 
 
